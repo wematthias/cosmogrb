@@ -30,6 +30,32 @@ def source_poisson_generator(tstart, tstop, function, fmax):
     return np.array(arrival_times)
 
 
+# @nb.njit()
+# def evolution_sampler(times, N, function, grid, emin, emax):
+
+#     out = np.zeros(N)
+
+#     for i in range(N):
+
+#         flag = True
+
+#         # find the maximum of the function.
+#         fmax = np.max(function(grid, np.array([times[i]]))[0, :])
+#         #fmax = np.max(function(np.array([emin]), np.array([times[i]]))[0, 0])
+
+#         while flag:
+
+#             test = np.random.uniform(0, fmax)
+#             x = np.random.uniform(emin, emax)
+
+#             if test <= function( np.array([x]), np.array([times[i]]) )[0, 0] :
+
+#                 out[i] = x
+#                 flag = False
+
+#     return out
+
+
 @nb.njit()
 def evolution_sampler(times, N, function, grid, emin, emax):
 
@@ -40,7 +66,8 @@ def evolution_sampler(times, N, function, grid, emin, emax):
         flag = True
 
         # find the maximum of the function.
-        fmax = np.max(function(grid, np.array([times[i]]))[0, :])
+        fmax = np.log(np.max(function(grid, np.array([times[i]]))[0, :]))
+        #fmax = np.max(function(np.array([emin]), np.array([times[i]]))[0, 0])
 
         while flag:
 
@@ -53,6 +80,9 @@ def evolution_sampler(times, N, function, grid, emin, emax):
                 flag = False
 
     return out
+
+
+
 
 
 class SourceFunction(object):
