@@ -5,7 +5,7 @@ from scipy.special import gammaincc, gamma
 from .source import SourceFunction
 
 
-@nb.njit
+@nb.njit(fastmath=True)
 def norris(x, K, t_start, t_rise, t_decay):
     if x > t_start:
         return (
@@ -25,7 +25,7 @@ def ggrb_int_cpl(a, Ec, Emin, Emax):
 
     return -Ec * Ec * (i2 - i1)
 
-
+@nb.njit(fastmath=True)
 def cpl(x, alpha, xp, F, a, b):
 
     if alpha == -2:
